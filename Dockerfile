@@ -17,6 +17,6 @@ WORKDIR /service
 
 EXPOSE 5000/tcp
 
-RUN echo '0 3 * * FRI python /service/csv-poster.py' > /etc/crontabs/root
+RUN echo '0 3 * * FRI python /service/file-forwarder.py' > /etc/crontabs/root
 CMD crond -l 2 -f
 

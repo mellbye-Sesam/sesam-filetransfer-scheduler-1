@@ -1,7 +1,6 @@
 """
 Simple service to grab a stream of data and stream it to an URL.
 """
-
 from requests import session
 from sesamutils import VariablesConfig, sesam_logger
 
@@ -19,11 +18,8 @@ if not config.validate():
 
 logger = sesam_logger("file-transfer-service", timestamp=config.LOG_TIMESTAMP)
 
-from sys import exit
 
 def main():
-    logger.debug('HELLOOOO')
-    exit(0)
     file_url = config.INPUT_URL
 
     try:
