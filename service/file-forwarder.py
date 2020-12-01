@@ -1,12 +1,11 @@
 """
-Simple service to grab a stream of data and stream it to an URL.
+Simple service to grab data from an URL and forward it to another URL.
 """
 from requests import session
 from sesamutils import VariablesConfig, sesam_logger
 
-required_env_vars = ["INPUT_URL", "OUTPUT_URL"]  # ["OUTPUT_URL"]
-optional_env_vars = [("CHUNK_SIZE", 262144 * 4 * 10),
-                     ("INPUT_JWT", None),
+required_env_vars = ["INPUT_URL", "OUTPUT_URL"]
+optional_env_vars = [("INPUT_JWT", None),
                      ("OUTPUT_JWT", None),
                      ("OUTPUT_CONTENT_TYPE", "application/json; charset=utf-8"),
                      ("LOG_TIMESTAMP", True)]
@@ -20,8 +19,6 @@ logger = sesam_logger("file-transfer-service", timestamp=config.LOG_TIMESTAMP)
 
 
 def main():
-    file_url = config.INPUT_URL
-
     try:
         input_connection = session()
         try:
@@ -29,8 +26,8 @@ def main():
         except AttributeError:
             pass
 
-        logger.debug(f'Creating stream from input URL "{file_url}"')
-        res = input_connection.get(file_url, stream=True)
+        logger.debug(f'Creating stream from input URL "{config.INPUT_URL}"')
+        res = input_connection.get(config.INPUT_URL)
         res.raise_for_status()
 
         output_connection = session()
@@ -43,12 +40,12 @@ def main():
         logger.debug(f'Streaming from input URL to output URL : "{config.OUTPUT_URL}"')
         output_response = output_connection.post(
             config.OUTPUT_URL,
-            data=res.iter_content(chunk_size=int(config.CHUNK_SIZE))
-         )
+            data=res.content
+        )
         output_response.raise_for_status()
 
     except Exception as exc:
-        logger.error(f'Error when transferring request data from "{config.INPUT_URL}"->"{config.OUTPUT_URL}"\n"{exc}"')
+        logger.error(f'Error when transferring data from "{config.INPUT_URL}"->"{config.OUTPUT_URL}"\nMsg: "{exc}"')
 
 
 if __name__ == "__main__":

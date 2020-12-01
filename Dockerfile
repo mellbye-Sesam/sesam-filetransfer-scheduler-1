@@ -17,6 +17,5 @@ WORKDIR /service
 
 EXPOSE 5000/tcp
 
-RUN echo '0 3 * * FRI python /service/file-forwarder.py' > /etc/crontabs/root
-CMD crond -l 2 -f
+CMD ["sh", "/service/setup_cron.sh"]
 
