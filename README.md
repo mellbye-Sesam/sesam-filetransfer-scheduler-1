@@ -6,7 +6,7 @@ I forward files on a user-defined cron-schedule from an INPUT_URL to an OUTPUT_U
 I also support JWT authorization.
 
 
-#Configuration
+# Configuration
 ## Environment variables
 ```json
 {
