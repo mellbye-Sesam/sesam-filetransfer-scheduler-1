@@ -34,7 +34,7 @@ It forwards it to the dynamicurl-proxy microservice which dynamically changes th
   "docker": {
     "environment": {
         "CRON": "0 3 * * FRI",
-        "INPUT_URL": "https://<***>.sesam.cloud/api/publishers/some-csv-endpoint/csv/hellooooo.csv",
+        "INPUT_URL": "https://<***>.sesam.cloud/api/publishers/some-csv-endpoint/csv",
         "OUTPUT_URL": "http://dynamicurl-proxy-service:5000?url=http://ftp:5000/somefolder/filename_[datestr].csv&datestr=datetime.datetime.now().strftime('%Y%m%d_%H%M%S')",
         "INPUT_JWT" : "ey***",
         "OUTPUT_JWT" : "ey***",
@@ -64,8 +64,7 @@ It forwards it to the dynamicurl-proxy microservice which dynamically changes th
     "columns": ["val1", "val2", "val3"],
     "delimiter": "\t",
     "encoding": "cp1252",
-    "lineterminator": "\r\n",
-    "filename": "hellooooo"
+    "lineterminator": "\r\n"
   }
 }]
 ```
