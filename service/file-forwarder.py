@@ -24,6 +24,9 @@ logger = sesam_logger("file-transfer-service", timestamp=config.LOG_TIMESTAMP)
 
 def main():
     logger.debug(f'Starting Service')
+    #Convert to int
+    config.RETRIES = int(config.RETRIES)
+    config.TIMEOUT = int(config.TIMEOUT)
     while config.RETRIES > 0:
         try:
             input_connection = session()
